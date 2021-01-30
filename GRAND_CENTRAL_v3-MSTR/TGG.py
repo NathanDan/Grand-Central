@@ -1,0 +1,104 @@
+#Nathan Jones
+#GRAND CENTRAL - TGG MSTR EDITION
+#2018
+
+from tkinter import messagebox, Label, Button, FALSE, Tk, Entry    #ALLOWING FOR TKINTER TO BE ACCESSED/UTILISED FOR THE PROGRAM TO USE ALL OF ITS FUNCTIONS AND GIVING THE PROGRAM A GUI
+from tkinter import *                                              #ALLOWING FOR ALL OF TKINTER'S MODULES TO BE IMPORTED 
+from datetime import datetime                                      #ALLOWING THE DATE AND TIME TO BE DISPLAYED 
+
+import time        #THIS ALLOWS FOR THE PROGRAM TO USE THE SLEEP FUNCTION WITHIN THE PROGRAM
+import sys         #ALLOWS ACCESS TO THE SYSTEM FROM WITHIN PYTHON 
+import os.path     #ALLOWS THE PROGRAM TO OPEN OTHER SPECIFIC APPLICATIONS, IN THIS CASE THE GC PROGRAMS 
+import os          #ALLOWS FOR CONTROL OF THE MACHINE AND ITS OS INCLUDING THE LIKES OF SAVING, OPENING/CLOSING FILES, ETC. 
+import string      #ALLOWS FOR DATA/ENTRIES TO BE RECOREDAS STRINGS AND NOT INDIVIDUAL CHARACTERS 
+import getpass     #WHEN CHECKING THE PASSWORD/USERNAME ALLOWS FOR A FUNCTION TO DO NOTHING AND PASS IT ON
+import random      #THIS IMPORT ALLOWS FOR WORDS TO BE RANDOMLY SELECTED 
+import statistics  #ALLOWS ACCESS TO THE STATISTICS LIBARY FOR THE DATA COLLECTION AND PROCESSING
+import itertools   #ALLOWS ACCESS TO ACCESS TO THE ITERATORS LIBARY FOR EFFICENT LOOPING 
+import datetime    #THIS ALLOWS FOR THE CURRENT TIME TO BE IMPORTED AND DISPLAYED FOR THE USER TO SEE 
+ 
+window = Tk()      #DEFINING WHAT THE MAIN TKINTER WINDOW WILL BE DEFINED AS
+
+def GRADE_GEN():
+
+    RES=[]                #CREATING AN EMPTY ARRAY THAT WILL HOLD THE TEST RESULTS THAT HAVE BEEN ENTERED 
+   
+    F_NAME = FN.get()     #THIS VARIABLE WILL BE MADE UP OF WHAT HAS BEEN INPUTTED IN THE FN ENTRY BOX   
+    L_NAME = LN.get()     #THIS VARIABLE WILL BE MADE UP OF WHAT HAS BEEN INPUTTED IN THE LN ENTRY BOX
+    SUBJ = SUB.get()      #THIS VARIABLE WILL BE MADE UP OF WHAT HAS BEEN INPUTTED IN THE SUB ENTRY BOX
+    FORM = FM.get()       #THIS VARIABLE WILL BE MADE UP OF WHAT HAS BEEN INPUTTED IN THE FM ENTRY BOX 
+        
+    DATA=TST.get()        #THIS VARIABLE WILL BE MADE UP OF WHAT HAS BEEN INPUTTED IN THE TST ENTRY BOX   
+    RES.append(int(DATA)) #APPENDING THE DATA INTO A RESULTS VARIABLE
+    
+    statistics.mean(RES)  #USING THE STATISTICS FUNCTION IT IS WORKING OUT THE MEAN SCORE OF THE SCORE INPUTTED  
+    
+    if statistics.mean(RES) <= 25:   #IF THE MEAN SCORE IS LOWER OR EQUAL TO 25 THEN THE FOLLOWING HAPPENS 
+        GRADE=("D")                  #THE GRADE FOR THE STUDENT WILL BE A 'D' GRADE
+    
+    if statistics.mean(RES) <= 50:   #IF THE MEAN SCORE IS LOWER OR EQUAL TO 50 THEN THE FOLLOWING HAPPENS
+        GRADE=("C")                  #THE GRADE FOR THE STUDENT WILL BE A 'C' GRADE
+
+    if statistics.mean(RES) <= 60:   #IF THE MEAN SCORE IS LOWER OR EQUAL TO 60 THEN THE FOLLOWING HAPPENS
+        GRADE=("B")                  #THE GRADE FOR THE STUDENT WILL BE A 'B' GRADE
+        
+    if statistics.mean(RES) >= 80:   #IF THE MEAN SCORE IS HIGHER OR EQUAL TO 80 THEN THE FOLLOWING HAPPENS
+        GRADE=("A")                  #THE GRADE FOR THE STUDENT WILL BE A 'A' GRADE
+
+    if statistics.mean(RES)  <=20:   #IF THE MEAN SCORE IS LOWER OR EQUAL TO 20 THEN THE FOLLOWING HAPPENS
+        GRADE=("U")                  #THE GRADE FOR THE STUDENT WILL BE A 'U' GRADE 
+    
+    L = Label(window, text="SAVING...", background="white")                   #CREATING A LABEL THAT TELLS THE USER WHAT THE PROGRAM IS DOING - IN THIS CASE SAVING
+    L.pack()                                                                  #DISPLAYING THE LABEL IN THE MAIN WINDOW  
+    r = open("TEST SCORE FOR "+str(L_NAME)+str(" (") +str(SUBJ)+str(")"),"w") #CREATING A NEW FILE AND GIVING IT A NAME - IN THIS CASE TEST SCORE FOR AND THEN THE STUDENTS LAST NAME 
+    r.write(("FIRST NAME:           ")+F_NAME+("\n"))                         #CREATING A NEW LINE WITHIN THE FILE THAT WILL STORE THE FIRST NAME OF THE STUDENT
+    r.write(("LAST NAME:            ")+L_NAME+("\n"))                         #CREATING A NEW LINE WITHIN THE FILE THAT WILL STORE THE LAST NAME OF THE STUDENT
+    r.write(("SUBJECT:              ")+SUBJ+("\n"))                           #CREATING A NEW LINE WITHIN THE FILE THAT WILL STORE THE SUBJECT
+    r.write(("FORM:                 ")+FORM+("\n"))                           #CREATING A NEW LINE WITHIN THE FILE THAT WILL STORE THE FORM OF THE STUDENT    
+    r.write(("GRADE:                ")+GRADE+("\n"))                          #CREATING A NEW LINE WITHIN THE FILE THAT WILL STORE THE GRADE THE STUDENT GOT 
+    r.close()                                                                 #CLOSING THE FILE THAT HAS JUST BEEN CREATED AND SAVING IT
+    L2 = Label(window, text="SAVE COMPLETE!", fg="Green", background="white") #CREATING A LABEL THAT WILL DISPLAY 'SAVE COMPLETE!' WHICH ALLOWS THE USER TO KNOW THAT THE FILE HAS BEEN SAVED
+    L2.pack()                                                                 #DISPLAYING THE LABEL ON TEH MENU
+    time.sleep(2)                                                             #WAITING 2 SECONDS  
+    os.startfile("C:\\Users\\natda\\OneDrive\\Sixth Form\\Computer Science\\CODE\GRAND CENTRAL v3\\GRAND_CENTRAL_v3-MSTR\\TGG.py") #FILE DIRECTORY FOR THIS PROGRAM SO IT CAN BE REFRESHED
+    window.destroy()                                                          #CLOSING THE WINDOW WITH THE USE OF THE '.destroy()' FUNCTION WITHIN TKINTER
+
+FNE = Label(window, text="First Name:", background="white") #CREATING A LABEL THAT WILL BE DISPLAYED ABOVE THE FIRST NAME ENTRY BOX
+FN = Entry(window, background="white")                      #CREATING THE FIRST NAME ENTRY BOX 
+
+LNE = Label(window, text="Last Name:", background="white")  #CREATING A LABEL THAT WILL BE DISPLAYED ABOVE THE LAST NAME ENTRY BOX
+LN = Entry(window, background="white",)                     #CREATING THE LAST NAME ENTRY BOX
+
+sub = Label(window, text="Subject:", background="white")    #CREATING A LABEL THAT WILL BE DISPLAYED ABOVE THE SUBJECT ENTRY BOX
+SUB = Entry(window, background="white",)                    #CREATING THE SUBJECT ENTRY BOX
+
+FME = Label(window, text="Form:", background="white")       #CREATING A LABEL THAT WILL BE DISPLAYED ABOVE THE FORM ENTRY BOX 
+FM = Entry(window, background="white",)                     #CREATING THE FORM ENTRY BOX
+
+tst = Label(window, text="Test Score:", background="white") #CREATING A LABEL THAT WILL BE DISPLAYED ABOVE THE TEST SCORE ENTRY BOX
+TST = Entry(window, background="white",)                    #CREATING THE TEST SCORE ENTRY BOX
+
+_ = Label(window, text=" ", background="white")             #CREATING A LABEL THAT WILL DISPLAY NOTHING SO WILL ACT LIKE A ONE LINE SPACE 
+
+E = Button(window, text="ENTER",command=GRADE_GEN)          #CREATING THE 'ENTER' BUTTON WHICH WILL START THE TEST GRADE PROCEDURE        
+
+FNE.pack() #DISPLAYING THE FIRST NAME LABEL
+FN.pack()  #DISPLAYING THE FIRST NAME ENTRY BOX
+LNE.pack() #DISPLAYING THE LAST NAME LABEL
+LN.pack()  #DISPLAYING THE LAST NAME ENTRY BOX
+sub.pack() #DISPLAYING THE SUBJECT NAME LABEL
+SUB.pack() #DISPLAYING THE SUBJECT ENTRY BOX 
+FME.pack() #DISPLAYING THE FORM NAME LABEL
+FM.pack()  #DISPLAYING THE FORM ENTRY BOX
+tst.pack() #DISPLAYING THE TEST SCORE NAME LABEL
+TST.pack() #DISPLAYING THE TEST SCORE ENTRY BOX
+_.pack()   #DISPLAYING THE EMPTY LABEL
+E.pack()   #DISPLAYING THE ENTER BUTTON
+        
+window.resizable(0,0)                         #THE WINDOW WILL NOT ENTER FULLSCREEN MODE
+window.resizable(width=FALSE, height=FALSE)   #THE USER CANNOT CHANGE THE SIZE OF THE MENU       
+window.title("TEST GRADE GENERATOR")          #GIVING THE WINDOW ITS NAME THAT WILL BE DISPLAYED IN THE BAR
+window.geometry("400x300")                    #CONFIGURING THE FIXED SIZE OF THE WINDOW WHICH WILL ALWAYS BE THIS SIZE
+window.configure(background='white')          #CONFIGURING THE BACKGROUND OF THE WINDOW TO BE LIGHT GREY
+
+mainloop()
